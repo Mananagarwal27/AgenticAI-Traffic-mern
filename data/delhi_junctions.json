@@ -1,0 +1,34 @@
+{
+  "junctions": [
+    {
+      "name": "AIIMS",
+      "latitude": 28.5670,
+      "longitude": 77.2090,
+      "description": "AIIMS Junction - Major hospital area"
+    },
+    {
+      "name": "ITO",
+      "latitude": 28.6328,
+      "longitude": 77.2197,
+      "description": "ITO Crossing - Central Delhi"
+    },
+    {
+      "name": "Connaught Place",
+      "latitude": 28.6315,
+      "longitude": 77.2167,
+      "description": "Connaught Place - Commercial hub"
+    },
+    {
+      "name": "Karol Bagh",
+      "latitude": 28.6519,
+      "longitude": 77.1909,
+      "description": "Karol Bagh - Shopping district"
+    },
+    {
+      "name": "Lajpat Nagar",
+      "latitude": 28.5678,
+      "longitude": 77.2431,
+      "description": "Lajpat Nagar - Market area"
+    }
+  ]
+}

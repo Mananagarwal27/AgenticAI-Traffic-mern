@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+      - name: Install backend deps
+        run: cd backend && npm ci 2>/dev/null || npm install
+      - name: Backend lint/check
+        run: cd backend && node -c src/server.js 2>/dev/null || true
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend deps
+        run: cd frontend && npm ci 2>/dev/null || npm install
+      - name: Frontend build
+        run: cd frontend && npm run build
+
+  ai-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install AI deps
+        run: cd ai-service && pip install -r requirements.txt
+      - name: Train model (synthetic data)
+        run: |
+          cd ai-service
+          python3 -c "
+          import json
+          from pathlib import Path
+          p = Path('../data/delhi_traffic_sample.json')
+          if not p.exists():
+            data = [{'junctionName':'AIIMS','timestamp':'2024-01-01T10:00:00Z','vehicleCount':50,'averageSpeed':30,'congestionLevel':'Medium','weatherCondition':'Clear','latitude':28.567,'longitude':77.209}]*100
+            p.parent.mkdir(exist_ok=True)
+            p.write_text(json.dumps(data, indent=2))
+          "
+      - name: Run model training
+        run: cd ai-service && python3 train_model.py
