@@ -179,3 +179,5 @@ TrafficSignal
 ## License
 
 Academic use only.
+Updated by team member for collaboration and project improvements.
+
