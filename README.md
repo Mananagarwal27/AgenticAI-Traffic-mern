@@ -180,4 +180,7 @@ TrafficSignal
 
 Academic use only.
 Updated by team member for collaboration and project improvements.
-
+## Team Contributions
+- Documentation updates
+- Testing support
+- UI review
